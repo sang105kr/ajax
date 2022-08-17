@@ -76,21 +76,37 @@
     }
 
     //상품표시
-    const displayProduct = product => {
+    const displayProduct = ({id,name,brand,desc,price}) => {
       const $tr = 
-          makeElements('tr',{'data-product-id':product.id},
+          makeElements('tr',{'data-product-id':id},
             makeElements('td',null,
-              makeElements('input',{type:'checkbox','data-product-id':product.id})),
-            makeElements('td',null,product.id+''),
-            makeElements('td',null,product.name),
-            makeElements('td',null,product.brand),
-            makeElements('td',null,product.desc),
-            makeElements('td',null,product.price+''),
+              makeElements('input',{type:'checkbox','data-product-id':id})),
+            makeElements('td',null,id+''),
+            makeElements('td',null,name),
+            makeElements('td',null,brand),
+            makeElements('td',null,desc),
+            makeElements('td',null,price+''),
             makeElements('td',null,
               makeElements('button',{'id':'updateBtn'},'수정'))  
           );
       return $tr;            
     }
+    // //상품표시
+    // const displayProduct = product => {
+    //   const $tr = 
+    //       makeElements('tr',{'data-product-id':product.id},
+    //         makeElements('td',null,
+    //           makeElements('input',{type:'checkbox','data-product-id':product.id})),
+    //         makeElements('td',null,product.id+''),
+    //         makeElements('td',null,product.name),
+    //         makeElements('td',null,product.brand),
+    //         makeElements('td',null,product.desc),
+    //         makeElements('td',null,product.price+''),
+    //         makeElements('td',null,
+    //           makeElements('button',{'id':'updateBtn'},'수정'))  
+    //       );
+    //   return $tr;            
+    // }
 
     //상품등록
     const addProduct = result => {
