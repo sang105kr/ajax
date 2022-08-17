@@ -81,11 +81,11 @@
           makeElements('tr',{'data-product-id':id},
             makeElements('td',null,
               makeElements('input',{type:'checkbox','data-product-id':id})),
-            makeElements('td',null,id+''),
+            makeElements('td',null,id.toString()),
             makeElements('td',null,name),
             makeElements('td',null,brand),
             makeElements('td',null,desc),
-            makeElements('td',null,price+''),
+            makeElements('td',null,price ?? ''),
             makeElements('td',null,
               makeElements('button',{'id':'updateBtn'},'수정'))  
           );
@@ -123,7 +123,7 @@
     }
 
     //상품등록 이벤트 등록
-    $productForm.addEventListener('submit',e=>{
+    $productForm?.addEventListener('submit',e=>{
       e.preventDefault();
       const xhr = new XMLHttpRequest();
       //const method = $productForm.method;
@@ -173,7 +173,7 @@
     }
     
     //상품목록 이벤트 목록
-    listBtn.addEventListener('click', displayList);
+    listBtn?.addEventListener('click', displayList);
 
     //상품조회
     const detailItem = result => {
@@ -193,7 +193,7 @@
     }
 
     //상품조회 이벤트 등록
-    detailBtn.addEventListener('click',e=>{      
+    detailBtn?.addEventListener('click',e=>{      
       const productId = detailItemId.value;    
       if(!productId) {
         alert('상품번호를 입력바랍니다');
@@ -237,7 +237,7 @@
     }
 
     //상품삭제 이벤트 등록
-    delBtn.addEventListener('click',e=>{
+    delBtn?.addEventListener('click',e=>{
       const $inputs = document.querySelectorAll('#dataList input[type=checkbox]');
       const $checkedBoxes = Array.from($inputs).filter(ele=>ele.checked);
       const countOfCheckedBox = $checkedBoxes.length;
@@ -266,7 +266,7 @@
 
 
     //수정버튼 이벤트 등록(이벤트위임)
-    dataList.addEventListener('click',e=>{
+    dataList?.addEventListener('click',e=>{
       if(e.target.tagName !== 'BUTTON') return;
 
       const $updateBtn = e.target;
@@ -307,7 +307,7 @@
     }
 
     //상품수정 이벤트 등록
-    saveBtn.addEventListener('click',e=>{
+    saveBtn?.addEventListener('click',e=>{
       
       const xhr = new XMLHttpRequest();
       xhr.open('PATCH',`/api/items/${productId.textContent}`);
