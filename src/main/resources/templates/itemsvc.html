@@ -52,6 +52,10 @@
     const $productForm = document.getElementById('productForm');
     const $parentElement = document.getElementById('dataList');
 
+    //에러표시
+    const displayError = msg =>{
+      document.getElementById('msg').textContent = msg;
+    }
 
     //상품표시
     const displayProduct = product => {
@@ -73,7 +77,7 @@
         const $tr = displayProduct(product);
         $parentElement.appendChild($tr);
       }else{
-        document.getElementById('msg').textContent = '상품등록에 문제가 발생했습니다. 관리자에게 문의 바랍니다.';
+        displayError('상품등록에 문제가 발생했습니다. 관리자에게 문의 바랍니다.');
       }
     }
 
@@ -107,7 +111,7 @@
         $parentElement.innerHTML = '';        
         $parentElement.appendChild(fragment);
       }else{
-        document.getElementById('msg').textContent = '상품목록 가져오기 문제가 발생했습니다. 관리자에게 문의 바랍니다.';
+        displayError('상품목록 가져오기 문제가 발생했습니다. 관리자에게 문의 바랍니다.');
       }
     }
 
@@ -127,6 +131,47 @@
       });
 
     });
+
+    //상품조회
+    const detailItem = result => {
+      if(result.rtcd == '00'){
+        const $tr = displayProduct(result.data);
+
+        //목록 제거
+        while($parentElement.firstChild){
+          $parentElement.removeChild($parentElement.firstChild)
+        }
+
+        $parentElement.appendChild($tr);
+      }else{
+        displayError('상품조회 가져오기 문제가 발생했습니다. 관리자에게 문의 바랍니다.');
+      }
+    }
+
+    //상품조회 이벤트 등록
+    detailBtn.addEventListener('click',e=>{      
+      const productId = detailItemId.value;    
+      if(!productId) {
+        alert('상품번호를 입력바랍니다');
+        detailItemId.focus();
+        return;
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET',`/api/items/${productId}`);
+      xhr.send(null);
+      xhr.addEventListener('load',e=>{
+
+        if(xhr.status == '200'){
+          console.log(xhr.responseText);
+          detailItem(JSON.parse(xhr.responseText));
+        }else{
+          console.log(xhr.status, xhr.statusText);
+        }
+
+      });
+    });
+
 
   </script>
 </body>
